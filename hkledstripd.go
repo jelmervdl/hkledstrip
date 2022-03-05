@@ -198,7 +198,7 @@ func main() {
 		Manufacturer: "Jelmer",
 	}
 
-	acc := accessory.NewLightbulb(info)
+	acc := accessory.NewColoredLightbulb(info)
 
 	acc.Lightbulb.On.OnValueRemoteUpdate(func(on bool) {
 		err := light.toggle(on)
