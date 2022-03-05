@@ -1,12 +1,14 @@
 package main
 
 import (
-	"github.com/brutella/hc"
-	"github.com/brutella/hc/accessory"
+	"github.com/brutella/hap"
+	"github.com/brutella/hap/accessory"
 	"github.com/chbmuc/lirc"
 	"github.com/lucasb-eyer/go-colorful"
+	"context"
 	"os"
 	"os/signal"
+	"syscall"
 	"log"
 	"fmt"
 )
@@ -200,6 +202,8 @@ func main() {
 
 	acc := accessory.NewColoredLightbulb(info)
 
+	fs := hap.NewFsStore("/var/lib/hklightstripd")
+
 	acc.Lightbulb.On.OnValueRemoteUpdate(func(on bool) {
 		err := light.toggle(on)
 
@@ -232,24 +236,24 @@ func main() {
 		}
 	})
 
-	t, err := hc.NewIPTransport(hc.Config{Pin: "11223344"}, acc.Accessory)
+	server, err := hap.NewServer(fs, acc.A)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 
-	hc.OnTermination(func() {
-		t.Stop()
-	})
-
-	c := make(chan os.Signal, 2)
+	c := make(chan os.Signal)
 	signal.Notify(c, os.Interrupt)
+	signal.Notify(c, syscall.SIGTERM)
 
+	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
-		<- c
-		t.Stop()
-		os.Exit(1)
+		<-c
+		// Stop delivering signals.
+		signal.Stop(c)
+		// Cancel the context to stop the server.
+		cancel()
 	}()
 
-	t.Start()
+	server.ListenAndServe(ctx)
 }
