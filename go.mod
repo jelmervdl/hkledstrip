@@ -3,18 +3,19 @@ module github.com/jelmervdl/hkledstrip
 go 1.17
 
 require (
-	github.com/brutella/hc v1.2.5
+	github.com/brutella/hap v0.0.12
 	github.com/chbmuc/lirc v0.0.0-20150702183631-f5796a80dd2b
 	github.com/lucasb-eyer/go-colorful v1.2.0
 )
 
 require (
 	github.com/brutella/dnssd v1.2.1 // indirect
+	github.com/go-chi/chi v1.5.4 // indirect
 	github.com/miekg/dns v1.1.4 // indirect
-	github.com/tadglines/go-pkgs v0.0.0-20140924210655-1f86682992f1 // indirect
-	github.com/xiam/to v0.0.0-20191116183551-8328998fc0ed // indirect
-	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
-	golang.org/x/net v0.0.0-20210119194325-5f4716e94777 // indirect
-	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
-	golang.org/x/text v0.3.3 // indirect
+	github.com/tadglines/go-pkgs v0.0.0-20210623144937-b983b20f54f9 // indirect
+	github.com/xiam/to v0.0.0-20200126224905-d60d31e03561 // indirect
+	golang.org/x/crypto v0.0.0-20220131195533-30dcbda58838 // indirect
+	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
+	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
+	golang.org/x/text v0.3.7 // indirect
 )
